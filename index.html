@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SHPL – Saarvasri Herbs Pvt. Ltd.</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+  :root {
+    --green-deep: #1b5e20;
+    --green-mid:  #2e7d32;
+    --green-light:#43a047;
+    --green-pale: #e8f5e9;
+    --gold:       #c9a84c;
+    --gold-light: #f0d98a;
+    --white:      #ffffff;
+    --off-white:  #f9fdf9;
+    --text-dark:  #1a2e1a;
+    --text-mid:   #4a5c4a;
+    --shadow:     0 8px 32px rgba(27,94,32,.12);
+    --shadow-lg:  0 20px 60px rgba(27,94,32,.18);
+  }
+
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+
+  html { scroll-behavior:smooth; }
+
+  body {
+    font-family:'DM Sans', sans-serif;
+    background:#fff;
+    color:var(--text-dark);
+    overflow-x:hidden;
+  }
+
+  /* ── LEAF PATTERN BACKGROUND ─────────────── */
+  .leaf-bg {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cellipse cx='40' cy='40' rx='12' ry='28' fill='none' stroke='%231b5e20' stroke-opacity='.06' stroke-width='1.5' transform='rotate(30 40 40)'/%3E%3Cellipse cx='40' cy='40' rx='12' ry='28' fill='none' stroke='%231b5e20' stroke-opacity='.04' stroke-width='1' transform='rotate(90 40 40)'/%3E%3C/svg%3E");
+  }
+
+  /* ── NAVBAR ──────────────────────────────── */
+  #navbar {
+    position:fixed; top:0; left:0; width:100%;
+    z-index:1000;
+    background:rgba(255,255,255,.92);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(27,94,32,.08);
+    transition:box-shadow .3s;
+  }
+  #navbar.scrolled { box-shadow:var(--shadow); }
+
+  .nav-inner {
+    max-width:1200px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 24px; height:68px;
+  }
+
+  .logo {
+    display:flex; align-items:center; gap:10px;
+    text-decoration:none;
+  }
+  .logo-icon {
+    width:44px; height:44px;
+    background:linear-gradient(135deg,var(--green-deep),var(--green-light));
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; font-size:1.3rem;
+    box-shadow:0 4px 12px rgba(27,94,32,.3);
+  }
+  .logo-text { display:flex; flex-direction:column; line-height:1; }
+  .logo-text span:first-child {
+    font-family:'Playfair Display', serif;
+    font-weight:700; font-size:1.25rem;
+    color:var(--green-deep);
+  }
+  .logo-text span:last-child {
+    font-size:.65rem; color:var(--gold);
+    letter-spacing:.08em; text-transform:uppercase;
+  }
+
+  .nav-links {
+    display:flex; align-items:center; gap:8px;
+    list-style:none;
+  }
+  .nav-links a {
+    text-decoration:none;
+    color:var(--text-mid); font-weight:500; font-size:.95rem;
+    padding:8px 16px; border-radius:8px;
+    transition:color .2s, background .2s;
+  }
+  .nav-links a:hover { color:var(--green-deep); background:var(--green-pale); }
+
+  .btn-join {
+    background:linear-gradient(135deg,var(--green-deep),var(--green-light));
+    color:#fff !important;
+    padding:10px 22px !important;
+    border-radius:50px !important;
+    font-weight:600 !important;
+    box-shadow:0 4px 14px rgba(27,94,32,.3);
+    transition:transform .2s, box-shadow .2s !important;
+  }
+  .btn-join:hover {
+    transform:translateY(-2px) !important;
+    box-shadow:0 6px 20px rgba(27,94,32,.4) !important;
+    background:var(--green-deep) !important;
+  }
+
+  .hamburger {
+    display:none; flex-direction:column; gap:5px;
+    cursor:pointer; padding:8px;
+  }
+  .hamburger span {
+    display:block; width:24px; height:2px;
+    background:var(--green-deep); border-radius:2px;
+    transition:all .3s;
+  }
+
+  /* ── HERO ────────────────────────────────── */
+  #hero {
+    min-height:100vh;
+    background: linear-gradient(160deg, #0d3b0f 0%, #1b5e20 45%, #2d7a32 80%, #1b5e20 100%);
+    display:flex; align-items:center;
+    position:relative; overflow:hidden;
+    padding-top:68px;
+  }
+
+  /* animated circle blobs */
+  .hero-blob {
+    position:absolute; border-radius:50%;
+    background:rgba(201,168,76,.08);
+    animation:pulse 6s infinite alternate;
+  }
+  .hero-blob:nth-child(1){ width:600px;height:600px; top:-200px; right:-150px; animation-delay:0s;}
+  .hero-blob:nth-child(2){ width:400px;height:400px; bottom:-100px; left:-100px; animation-delay:2s; background:rgba(255,255,255,.05);}
+  .hero-blob:nth-child(3){ width:250px;height:250px; top:50%; right:20%; animation-delay:1s;}
+
+  @keyframes pulse{
+    from{transform:scale(1) rotate(0deg);}
+    to  {transform:scale(1.1) rotate(10deg);}
+  }
+
+  /* floating leaves */
+  .leaf {
+    position:absolute; opacity:.18;
+    animation:floatLeaf 8s ease-in-out infinite alternate;
+  }
+  @keyframes floatLeaf{
+    0%  {transform:translateY(0) rotate(0deg);}
+    100%{transform:translateY(-30px) rotate(20deg);}
+  }
+
+  .hero-content {
+    max-width:1200px; margin:0 auto; padding:80px 24px;
+    display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;
+    position:relative; z-index:2;
+  }
+
+  .hero-badge {
+    display:inline-flex; align-items:center; gap:8px;
+    background:rgba(201,168,76,.2); border:1px solid rgba(201,168,76,.4);
+    color:var(--gold-light); font-size:.8rem; font-weight:600;
+    padding:6px 14px; border-radius:50px; letter-spacing:.06em;
+    text-transform:uppercase; margin-bottom:20px;
+    animation:fadeUp .7s .1s both;
+  }
+
+  .hero-title {
+    font-family:'Playfair Display', serif;
+    font-size:clamp(2.4rem,5vw,4rem);
+    color:#fff; line-height:1.1; font-weight:900;
+    margin-bottom:24px;
+    animation:fadeUp .7s .2s both;
+  }
+  .hero-title .gold { color:var(--gold-light); }
+
+  .hero-subtitle {
+    color:rgba(255,255,255,.75); font-size:1.05rem; line-height:1.7;
+    margin-bottom:36px;
+    animation:fadeUp .7s .3s both;
+  }
+
+  .hero-btns {
+    display:flex; flex-wrap:wrap; gap:14px;
+    animation:fadeUp .7s .4s both;
+  }
+
+  .btn-primary {
+    display:inline-flex; align-items:center; gap:8px;
+    background:linear-gradient(135deg,var(--gold),#a87c2a);
+    color:#fff; padding:14px 28px; border-radius:50px;
+    font-weight:700; font-size:1rem; text-decoration:none;
+    box-shadow:0 6px 20px rgba(201,168,76,.4);
+    transition:transform .2s, box-shadow .2s;
+  }
+  .btn-primary:hover { transform:translateY(-3px); box-shadow:0 10px 30px rgba(201,168,76,.5); }
+
+  .btn-secondary {
+    display:inline-flex; align-items:center; gap:8px;
+    background:rgba(255,255,255,.12); color:#fff;
+    padding:14px 28px; border-radius:50px;
+    font-weight:600; font-size:1rem; text-decoration:none;
+    border:1px solid rgba(255,255,255,.3);
+    transition:background .2s, transform .2s;
+  }
+  .btn-secondary:hover { background:rgba(255,255,255,.22); transform:translateY(-3px); }
+
+  /* Hero stats */
+  .hero-stats {
+    display:flex; gap:32px; margin-top:48px;
+    animation:fadeUp .7s .5s both;
+  }
+  .stat { color:#fff; }
+  .stat-num {
+    font-family:'Playfair Display', serif;
+    font-size:2rem; font-weight:700; color:var(--gold-light);
+    display:block;
+  }
+  .stat-label { font-size:.8rem; color:rgba(255,255,255,.6); letter-spacing:.04em; text-transform:uppercase; }
+
+  /* Hero visual */
+  .hero-visual {
+    display:flex; flex-direction:column; align-items:center;
+    animation:fadeUp .7s .4s both;
+  }
+
+  .product-showcase {
+    position:relative; width:340px; height:340px;
+  }
+  .showcase-circle {
+    width:300px; height:300px;
+    background:linear-gradient(135deg,rgba(201,168,76,.25),rgba(255,255,255,.1));
+    border:2px solid rgba(201,168,76,.3);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    margin:0 auto;
+    box-shadow:0 0 60px rgba(201,168,76,.15);
+    position:relative;
+  }
+
+  /* SVG leaf illustration inside circle */
+  .center-leaf-svg {
+    width:200px; height:200px; opacity:.9;
+  }
+
+  /* orbiting mini-cards */
+  .orbit-card {
+    position:absolute;
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.25);
+    backdrop-filter:blur(8px);
+    border-radius:16px;
+    padding:10px 14px;
+    color:#fff;
+    font-size:.75rem; font-weight:600;
+    display:flex; align-items:center; gap:6px;
+    white-space:nowrap;
+    animation:floatCard 4s ease-in-out infinite alternate;
+  }
+  .orbit-card:nth-child(2){top:0;left:50%;transform:translateX(-50%); animation-delay:0s;}
+  .orbit-card:nth-child(3){bottom:10px;right:0; animation-delay:1s;}
+  .orbit-card:nth-child(4){bottom:10px;left:0; animation-delay:2s;}
+  @keyframes floatCard{
+    from{transform:translateY(0);}
+    to  {transform:translateY(-10px);}
+  }
+  .orbit-card:nth-child(3), .orbit-card:nth-child(4){
+    animation:floatCard2 4s ease-in-out infinite alternate;
+  }
+  @keyframes floatCard2{
+    from{transform:translateY(0);}
+    to  {transform:translateY(10px);}
+  }
+  .orbit-card i { color:var(--gold-light); }
+
+  /* Rafaela card */
+  .rafaela-card {
+    background:rgba(255,255,255,.1);
+    border:1px solid rgba(201,168,76,.35);
+    border-radius:20px; padding:16px 24px;
+    color:#fff; margin-top:20px;
+    text-align:center; width:300px;
+    backdrop-filter:blur(8px);
+  }
+  .rafaela-avatar {
+    width:60px; height:60px; border-radius:50%;
+    background:linear-gradient(135deg,var(--gold),var(--green-mid));
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.6rem; margin:0 auto 10px;
+  }
+  .rafaela-name {
+    font-family:'Playfair Display', serif;
+    font-size:1.1rem; font-weight:700;
+  }
+  .rafaela-role { font-size:.8rem; color:var(--gold-light); margin-top:2px; }
+  .rafaela-wa {
+    margin-top:12px;
+    display:inline-flex; align-items:center; gap:6px;
+    background:rgba(37,211,102,.2); border:1px solid rgba(37,211,102,.4);
+    color:#4dff91; border-radius:50px; padding:6px 14px;
+    font-size:.8rem; font-weight:600; text-decoration:none;
+    transition:background .2s;
+  }
+  .rafaela-wa:hover { background:rgba(37,211,102,.35); }
+
+  @keyframes fadeUp{
+    from{opacity:0; transform:translateY(30px);}
+    to  {opacity:1; transform:translateY(0);}
+  }
+
+  /* ── SECTIONS SHARED ─────────────────────── */
+  section { padding:90px 24px; }
+
+  .section-inner { max-width:1200px; margin:0 auto; }
+
+  .section-tag {
+    display:inline-block;
+    background:var(--green-pale); color:var(--green-deep);
+    font-size:.75rem; font-weight:700; letter-spacing:.1em;
+    text-transform:uppercase; padding:6px 14px; border-radius:50px;
+    border:1px solid rgba(27,94,32,.15); margin-bottom:16px;
+  }
+
+  .section-title {
+    font-family:'Playfair Display', serif;
+    font-size:clamp(1.8rem,3.5vw,2.8rem);
+    color:var(--green-deep); font-weight:700;
+    line-height:1.2; margin-bottom:16px;
+  }
+
+  .section-sub {
+    color:var(--text-mid); font-size:1rem; line-height:1.7;
+    max-width:560px;
+  }
+
+  .section-head { margin-bottom:52px; }
+  .section-head.center { text-align:center; }
+  .section-head.center .section-sub { margin:0 auto; }
+
+  /* ── BENEFITS ────────────────────────────── */
+  #benefits { background:var(--off-white); }
+
+  .benefits-grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(240px,1fr));
+    gap:28px;
+  }
+
+  .benefit-card {
+    background:#fff; border-radius:20px; padding:36px 28px;
+    box-shadow:var(--shadow);
+    border:1px solid rgba(27,94,32,.06);
+    transition:transform .3s, box-shadow .3s;
+    position:relative; overflow:hidden;
+  }
+  .benefit-card::before {
+    content:'';
+    position:absolute; top:0; left:0; right:0; height:4px;
+    background:linear-gradient(90deg,var(--green-deep),var(--green-light));
+    opacity:0; transition:opacity .3s;
+  }
+  .benefit-card:hover { transform:translateY(-8px); box-shadow:var(--shadow-lg); }
+  .benefit-card:hover::before { opacity:1; }
+
+  .benefit-icon {
+    width:60px; height:60px; border-radius:16px;
+    background:linear-gradient(135deg,var(--green-pale),#c8e6c9);
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.6rem; margin-bottom:20px;
+    color:var(--green-deep);
+  }
+
+  .benefit-title {
+    font-family:'Playfair Display', serif;
+    font-size:1.1rem; font-weight:700;
+    color:var(--green-deep); margin-bottom:10px;
+  }
+  .benefit-desc { font-size:.9rem; color:var(--text-mid); line-height:1.65; }
+
+  /* ── PRODUCTS ────────────────────────────── */
+  #products { background:#fff; }
+
+  .products-grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:32px;
+  }
+
+  .product-card {
+    border-radius:24px; overflow:hidden;
+    box-shadow:var(--shadow);
+    border:1px solid rgba(27,94,32,.07);
+    background:#fff;
+    transition:transform .3s, box-shadow .3s;
+    display:flex; flex-direction:column;
+  }
+  .product-card:hover { transform:translateY(-10px); box-shadow:var(--shadow-lg); }
+
+  /* SVG product image */
+  .product-img-wrap {
+    height:200px;
+    display:flex; align-items:center; justify-content:center;
+    position:relative; overflow:hidden;
+  }
+  .product-img-wrap svg { width:160px; height:160px; }
+
+  /* health care */
+  .product-card:nth-child(1) .product-img-wrap { background:linear-gradient(135deg,#e8f5e9,#c8e6c9); }
+  /* personal care */
+  .product-card:nth-child(2) .product-img-wrap { background:linear-gradient(135deg,#fff8e1,#ffe082); }
+  /* agri care */
+  .product-card:nth-child(3) .product-img-wrap { background:linear-gradient(135deg,#e0f2f1,#b2dfdb); }
+
+  .product-body { padding:28px; flex:1; display:flex; flex-direction:column; }
+
+  .product-tag {
+    display:inline-block;
+    font-size:.72rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+    padding:4px 10px; border-radius:50px; margin-bottom:12px;
+  }
+  .tag-health  { background:#e8f5e9; color:#1b5e20; }
+  .tag-beauty  { background:#fff8e1; color:#f57f17; }
+  .tag-agri    { background:#e0f2f1; color:#00695c; }
+
+  .product-name {
+    font-family:'Playfair Display', serif;
+    font-size:1.3rem; font-weight:700;
+    color:var(--green-deep); margin-bottom:8px;
+  }
+  .product-desc { font-size:.9rem; color:var(--text-mid); line-height:1.65; margin-bottom:12px; }
+
+  .product-items {
+    list-style:none; margin-bottom:22px;
+  }
+  .product-items li {
+    font-size:.85rem; color:var(--text-mid);
+    padding:4px 0; display:flex; align-items:center; gap:8px;
+  }
+  .product-items li::before {
+    content:'✦';
+    color:var(--gold); font-size:.6rem;
+  }
+
+  .btn-wa {
+    margin-top:auto;
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    background:#25D366; color:#fff;
+    padding:12px 22px; border-radius:50px;
+    font-weight:700; font-size:.9rem; text-decoration:none;
+    transition:transform .2s, box-shadow .2s;
+    box-shadow:0 4px 14px rgba(37,211,102,.35);
+  }
+  .btn-wa:hover { transform:translateY(-2px); box-shadow:0 6px 22px rgba(37,211,102,.45); background:#1ebe5d; }
+
+  /* ── CTA BANNER ──────────────────────────── */
+  #cta {
+    background:linear-gradient(135deg,var(--green-deep) 0%, #0d3b0f 60%, #1b5e20 100%);
+    position:relative; overflow:hidden;
+  }
+  #cta::before {
+    content:'';
+    position:absolute; inset:0;
+    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='20' fill='none' stroke='%23ffffff' stroke-opacity='.04' stroke-width='1'/%3E%3C/svg%3E");
+  }
+
+  .cta-inner {
+    max-width:800px; margin:0 auto; text-align:center; position:relative; z-index:2;
+  }
+  .cta-inner .section-title { color:#fff; }
+  .cta-inner .section-sub { color:rgba(255,255,255,.7); margin:0 auto 40px; }
+
+  .cta-btns { display:flex; flex-wrap:wrap; justify-content:center; gap:16px; }
+
+  .btn-cta-primary {
+    display:inline-flex; align-items:center; gap:10px;
+    background:#25D366; color:#fff;
+    padding:16px 32px; border-radius:50px;
+    font-weight:700; font-size:1rem; text-decoration:none;
+    box-shadow:0 6px 22px rgba(37,211,102,.4);
+    transition:transform .2s, box-shadow .2s;
+  }
+  .btn-cta-primary:hover { transform:translateY(-3px); box-shadow:0 10px 32px rgba(37,211,102,.5); }
+
+  .btn-cta-secondary {
+    display:inline-flex; align-items:center; gap:10px;
+    background:rgba(255,255,255,.12); color:#fff;
+    padding:16px 32px; border-radius:50px;
+    font-weight:600; font-size:1rem; text-decoration:none;
+    border:1.5px solid rgba(255,255,255,.3);
+    transition:background .2s, transform .2s;
+  }
+  .btn-cta-secondary:hover { background:rgba(255,255,255,.22); transform:translateY(-3px); }
+
+  /* Rafaela showcase */
+  .rafaela-showcase {
+    max-width:1200px; margin:60px auto 0;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(201,168,76,.3);
+    border-radius:24px; padding:36px 40px;
+    display:flex; align-items:center; gap:32px; flex-wrap:wrap;
+    position:relative; z-index:2;
+  }
+  .rafaela-left {
+    display:flex; align-items:center; gap:20px; flex:1;
+  }
+  .rafaela-big-avatar {
+    width:80px; height:80px; border-radius:50%;
+    background:linear-gradient(135deg,var(--gold),var(--green-mid));
+    display:flex; align-items:center; justify-content:center;
+    font-size:2.2rem; flex-shrink:0;
+    border:3px solid rgba(201,168,76,.5);
+  }
+  .rafaela-info h3 {
+    font-family:'Playfair Display', serif;
+    font-size:1.4rem; color:#fff; font-weight:700;
+  }
+  .rafaela-info p { color:var(--gold-light); font-size:.9rem; margin-top:4px; }
+  .rafaela-info .rafaela-quote {
+    color:rgba(255,255,255,.7); font-size:.88rem; margin-top:8px; line-height:1.5;
+    font-style:italic;
+  }
+  .rafaela-right { margin-left:auto; }
+
+  /* ── FOOTER ──────────────────────────────── */
+  footer {
+    background:#0d3b0f; color:rgba(255,255,255,.65);
+    padding:60px 24px 32px;
+  }
+  .footer-inner {
+    max-width:1200px; margin:0 auto;
+  }
+  .footer-top {
+    display:grid; grid-template-columns:2fr 1fr 1fr;
+    gap:48px; margin-bottom:48px; flex-wrap:wrap;
+  }
+  .footer-brand .logo { margin-bottom:16px; display:inline-flex; }
+  .footer-brand p { font-size:.88rem; line-height:1.7; max-width:280px; }
+
+  .footer-col h4 {
+    font-family:'Playfair Display', serif;
+    color:#fff; font-size:1rem; margin-bottom:16px; font-weight:700;
+  }
+  .footer-col ul { list-style:none; }
+  .footer-col ul li { margin-bottom:10px; }
+  .footer-col ul li a {
+    text-decoration:none; color:rgba(255,255,255,.6);
+    font-size:.88rem; transition:color .2s;
+  }
+  .footer-col ul li a:hover { color:var(--gold-light); }
+
+  .footer-divider { height:1px; background:rgba(255,255,255,.08); margin-bottom:28px; }
+
+  .footer-bottom {
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;
+  }
+  .footer-bottom p { font-size:.82rem; }
+
+  .social-links { display:flex; gap:12px; }
+  .social-links a {
+    width:38px; height:38px; border-radius:50%;
+    background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12);
+    display:flex; align-items:center; justify-content:center;
+    color:rgba(255,255,255,.65); font-size:.9rem;
+    text-decoration:none; transition:background .2s, color .2s;
+  }
+  .social-links a:hover { background:var(--gold); color:#fff; }
+
+  /* ── WHATSAPP FLOAT ──────────────────────── */
+  .wa-float {
+    position:fixed; bottom:28px; right:28px; z-index:999;
+    width:56px; height:56px; border-radius:50%;
+    background:#25D366; color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.5rem; text-decoration:none;
+    box-shadow:0 6px 22px rgba(37,211,102,.45);
+    animation:bounce 2s infinite;
+  }
+  @keyframes bounce{
+    0%,100%{transform:translateY(0);}
+    50%    {transform:translateY(-8px);}
+  }
+
+  /* ── MOBILE ──────────────────────────────── */
+  @media(max-width:768px){
+    .nav-links { display:none; position:absolute; top:68px; left:0; right:0;
+      background:#fff; flex-direction:column; padding:16px; gap:4px;
+      box-shadow:0 10px 30px rgba(0,0,0,.1);
+    }
+    .nav-links.open { display:flex; }
+    .hamburger { display:flex; }
+
+    .hero-content { grid-template-columns:1fr; padding:60px 24px; }
+    .hero-visual { display:none; }
+    .hero-stats { flex-wrap:wrap; gap:20px; }
+
+    .footer-top { grid-template-columns:1fr; gap:32px; }
+    .footer-bottom { flex-direction:column; text-align:center; }
+
+    .rafaela-showcase { flex-direction:column; text-align:center; }
+    .rafaela-left { flex-direction:column; text-align:center; }
+    .rafaela-right { margin-left:0; }
+  }
+
+  /* ── SCROLL REVEAL ───────────────────────── */
+  .reveal { opacity:0; transform:translateY(40px); transition:opacity .7s, transform .7s; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- ────────────── NAVBAR ────────────── -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#hero" class="logo">
+      <div class="logo-icon"><i class="fas fa-leaf"></i></div>
+      <div class="logo-text">
+        <span>SHPL</span>
+        <span>Saarvasri Herbs Pvt. Ltd.</span>
+      </div>
+    </a>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#benefits">About</a></li>
+      <li><a href="#products">Products</a></li>
+      <li><a href="https://wa.me/918798854711" target="_blank" class="btn-join">Join Now</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- ────────────── HERO ────────────── -->
+<section id="hero">
+  <div class="hero-blob"></div>
+  <div class="hero-blob"></div>
+  <div class="hero-blob"></div>
+
+  <!-- floating leaves -->
+  <svg class="leaf" style="top:20%;left:5%;width:60px;" viewBox="0 0 60 80">
+    <ellipse cx="30" cy="40" rx="18" ry="35" fill="#4caf50" opacity=".6" transform="rotate(-20 30 40)"/>
+    <line x1="30" y1="5" x2="30" y2="75" stroke="#2e7d32" stroke-width="1.5"/>
+  </svg>
+  <svg class="leaf" style="bottom:15%;right:8%;width:45px;animation-delay:3s;" viewBox="0 0 60 80">
+    <ellipse cx="30" cy="40" rx="14" ry="28" fill="#81c784" opacity=".5" transform="rotate(15 30 40)"/>
+    <line x1="30" y1="12" x2="30" y2="68" stroke="#388e3c" stroke-width="1.5"/>
+  </svg>
+
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-badge"><i class="fas fa-seedling"></i> Trusted by 10,000+ Families</div>
+      <h1 class="hero-title">Unlock Your<br><span class="gold">Wellness</span><br>with SHPL.</h1>
+      <p class="hero-subtitle">
+        Saarvasri Herbs Pvt. Ltd. — India's leading name in Herbal &amp; Wellness products.
+        We blend the wisdom of Ancient Ayurveda with modern science to bring nature's best to your home.
+      </p>
+      <div class="hero-btns">
+        <a href="https://wa.me/918798854711" target="_blank" class="btn-primary">
+          <i class="fab fa-whatsapp"></i> Get Started on WhatsApp
+        </a>
+        <a href="#products" class="btn-secondary">
+          <i class="fas fa-leaf"></i> Explore Products
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Natural</span></div>
+        <div class="stat"><span class="stat-num">50+</span><span class="stat-label">Products</span></div>
+        <div class="stat"><span class="stat-num">ISO</span><span class="stat-label">Certified</span></div>
+        <div class="stat"><span class="stat-num">GMP</span><span class="stat-label">Approved</span></div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="product-showcase">
+        <!-- orbit cards -->
+        <div class="orbit-card"><i class="fas fa-certificate"></i> ISO Certified</div>
+        <div class="orbit-card"><i class="fas fa-flask"></i> Ayurvedic Science</div>
+        <div class="orbit-card"><i class="fas fa-leaf"></i> 100% Organic</div>
+
+        <div class="showcase-circle">
+          <!-- Leaf / herb SVG illustration -->
+          <svg class="center-leaf-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <!-- background glow -->
+            <circle cx="100" cy="100" r="90" fill="rgba(201,168,76,0.08)"/>
+            <!-- big leaf -->
+            <path d="M100 20 C130 40 160 80 140 130 C120 175 80 175 60 130 C40 80 70 40 100 20Z"
+                  fill="#2e7d32" opacity=".85"/>
+            <path d="M100 20 C100 80 100 140 100 180" stroke="#c8e6c9" stroke-width="2" fill="none"/>
+            <path d="M100 60 C85 75 75 90 60 130" stroke="#a5d6a7" stroke-width="1.5" fill="none"/>
+            <path d="M100 60 C115 75 125 90 140 130" stroke="#a5d6a7" stroke-width="1.5" fill="none"/>
+            <path d="M100 90 C88 100 80 112 72 140" stroke="#a5d6a7" stroke-width="1" fill="none"/>
+            <path d="M100 90 C112 100 120 112 128 140" stroke="#a5d6a7" stroke-width="1" fill="none"/>
+            <!-- small side leaves -->
+            <ellipse cx="60" cy="100" rx="22" ry="12" fill="#43a047" opacity=".7" transform="rotate(-30 60 100)"/>
+            <ellipse cx="140" cy="100" rx="22" ry="12" fill="#43a047" opacity=".7" transform="rotate(30 140 100)"/>
+            <!-- dew drops -->
+            <circle cx="90" cy="75" r="4" fill="#b2dfdb" opacity=".9"/>
+            <circle cx="110" cy="85" r="3" fill="#b2dfdb" opacity=".8"/>
+            <!-- gold center dot -->
+            <circle cx="100" cy="100" r="10" fill="rgba(201,168,76,.55)"/>
+            <circle cx="100" cy="100" r="5" fill="#c9a84c"/>
+            <!-- text ring -->
+            <path id="arc" d="M 30 100 A 70 70 0 0 1 170 100" fill="none"/>
+            <text font-size="9" fill="rgba(255,255,255,.6)" font-family="DM Sans,sans-serif" letter-spacing="3">
+              <textPath href="#arc">SAARVASRI HERBS PVT LTD •</textPath>
+            </text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Rafaela contact card -->
+      <div class="rafaela-card">
+        <div class="rafaela-avatar">🌿</div>
+        <div class="rafaela-name">Rafaela</div>
+        <div class="rafaela-role">SHPL Wellness Advisor</div>
+        <a href="https://wa.me/918798854711" target="_blank" class="rafaela-wa">
+          <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────── BENEFITS ────────────── -->
+<section id="benefits" class="leaf-bg">
+  <div class="section-inner">
+    <div class="section-head center reveal">
+      <span class="section-tag">Product Excellence</span>
+      <h2 class="section-title">Why Choose SHPL?</h2>
+      <p class="section-sub">Every product we craft is a promise — pure ingredients, proven results, and care for you and the planet.</p>
+    </div>
+
+    <div class="benefits-grid">
+      <div class="benefit-card reveal">
+        <div class="benefit-icon">🌿</div>
+        <div class="benefit-title">100% Natural &amp; Organic</div>
+        <p class="benefit-desc">No harmful chemicals, no synthetic additives. Every ingredient is sourced from certified organic farms for your safety and wellbeing.</p>
+      </div>
+      <div class="benefit-card reveal">
+        <div class="benefit-icon">🔬</div>
+        <div class="benefit-title">Scientific Formulations</div>
+        <p class="benefit-desc">Ancient Ayurvedic wisdom meets cutting-edge modern science. Our formulations are clinically researched and time-tested.</p>
+      </div>
+      <div class="benefit-card reveal">
+        <div class="benefit-icon">🏅</div>
+        <div class="benefit-title">ISO &amp; GMP Certified</div>
+        <p class="benefit-desc">Manufacturing quality you can trust. All products are produced under strict ISO and GMP guidelines — quality is guaranteed.</p>
+      </div>
+      <div class="benefit-card reveal">
+        <div class="benefit-icon">💛</div>
+        <div class="benefit-title">Affordable Premium Care</div>
+        <p class="benefit-desc">Premium herbal health shouldn't be a luxury. SHPL makes world-class wellness accessible to every family in India.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────── PRODUCTS ────────────── -->
+<section id="products">
+  <div class="section-inner">
+    <div class="section-head center reveal">
+      <span class="section-tag">Our Range</span>
+      <h2 class="section-title">Product Showcase</h2>
+      <p class="section-sub">Three powerful categories crafted to care for your health, beauty, and the earth.</p>
+    </div>
+
+    <div class="products-grid">
+
+      <!-- Health Care -->
+      <div class="product-card reveal">
+        <div class="product-img-wrap">
+          <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+            <!-- bottle shape -->
+            <rect x="58" y="40" width="44" height="80" rx="14" fill="#2e7d32" opacity=".85"/>
+            <rect x="68" y="28" width="24" height="18" rx="6" fill="#1b5e20"/>
+            <rect x="62" y="85" width="36" height="22" rx="4" fill="rgba(255,255,255,.2)"/>
+            <!-- cross symbol -->
+            <rect x="77" y="55" width="6" height="22" rx="3" fill="white"/>
+            <rect x="69" y="63" width="22" height="6" rx="3" fill="white"/>
+            <!-- leaf accent -->
+            <ellipse cx="120" cy="90" rx="16" ry="8" fill="#43a047" opacity=".6" transform="rotate(-30 120 90)"/>
+            <ellipse cx="40" cy="90" rx="14" ry="7" fill="#43a047" opacity=".5" transform="rotate(30 40 90)"/>
+            <!-- dots -->
+            <circle cx="65" cy="93" r="2.5" fill="rgba(255,255,255,.5)"/>
+            <circle cx="72" cy="99" r="2" fill="rgba(255,255,255,.4)"/>
+            <circle cx="80" cy="95" r="2" fill="rgba(255,255,255,.4)"/>
+          </svg>
+        </div>
+        <div class="product-body">
+          <span class="product-tag tag-health">Health Care</span>
+          <div class="product-name">Immune &amp; Detox Range</div>
+          <p class="product-desc">Strengthen your body's natural defences with our science-backed herbal formulations.</p>
+          <ul class="product-items">
+            <li>Immunity Booster Capsules</li>
+            <li>Liver Detox Syrup</li>
+            <li>Ayurvedic Chyawanprash</li>
+            <li>Herbal Multivitamins</li>
+          </ul>
+          <a href="https://wa.me/918798854711?text=Hi%20Rafaela%2C%20I'm%20interested%20in%20Health%20Care%20products!" target="_blank" class="btn-wa">
+            <i class="fab fa-whatsapp"></i> Consult on WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <!-- Personal Care -->
+      <div class="product-card reveal">
+        <div class="product-img-wrap">
+          <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+            <!-- cream jar -->
+            <ellipse cx="80" cy="105" rx="38" ry="12" fill="#f9a825" opacity=".7"/>
+            <rect x="42" y="70" width="76" height="35" rx="8" fill="#f9a825"/>
+            <!-- lid -->
+            <rect x="42" y="58" width="76" height="18" rx="8" fill="#f57f17"/>
+            <!-- shine -->
+            <ellipse cx="65" cy="64" rx="12" ry="4" fill="rgba(255,255,255,.3)"/>
+            <!-- label -->
+            <rect x="52" y="74" width="56" height="22" rx="4" fill="rgba(255,255,255,.25)"/>
+            <!-- leaf on jar -->
+            <ellipse cx="80" cy="85" rx="14" ry="6" fill="#2e7d32" opacity=".7" transform="rotate(-10 80 85)"/>
+            <line x1="80" y1="79" x2="80" y2="91" stroke="#1b5e20" stroke-width="1"/>
+            <!-- sparkles -->
+            <text x="108" y="60" font-size="12" fill="#ffd54f">✦</text>
+            <text x="42" y="55" font-size="8" fill="#ffd54f">✦</text>
+          </svg>
+        </div>
+        <div class="product-body">
+          <span class="product-tag tag-beauty">Personal Care</span>
+          <div class="product-name">Herbal Beauty &amp; Hygiene</div>
+          <p class="product-desc">Nourish your skin and hair with the purest herbs — beauty rituals rooted in Ayurveda.</p>
+          <ul class="product-items">
+            <li>Herbal Face Wash &amp; Scrub</li>
+            <li>Ayurvedic Hair Oil</li>
+            <li>Turmeric Glow Cream</li>
+            <li>Natural Aloe Gel</li>
+          </ul>
+          <a href="https://wa.me/918798854711?text=Hi%20Rafaela%2C%20I'm%20interested%20in%20Personal%20Care%20products!" target="_blank" class="btn-wa">
+            <i class="fab fa-whatsapp"></i> Consult on WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <!-- Agri Care -->
+      <div class="product-card reveal">
+        <div class="product-img-wrap">
+          <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+            <!-- soil mound -->
+            <ellipse cx="80" cy="125" rx="55" ry="16" fill="#5d4037" opacity=".5"/>
+            <!-- plant stem -->
+            <line x1="80" y1="125" x2="80" y2="55" stroke="#2e7d32" stroke-width="3"/>
+            <!-- big leaves -->
+            <path d="M80 80 C55 65 35 75 40 95 C50 115 75 100 80 80Z" fill="#43a047"/>
+            <path d="M80 80 C105 65 125 75 120 95 C110 115 85 100 80 80Z" fill="#388e3c"/>
+            <path d="M80 65 C60 52 45 60 50 75 C58 88 75 80 80 65Z" fill="#66bb6a"/>
+            <path d="M80 65 C100 52 115 60 110 75 C102 88 85 80 80 65Z" fill="#4caf50"/>
+            <!-- top bud -->
+            <ellipse cx="80" cy="52" rx="10" ry="14" fill="#81c784"/>
+            <!-- water drops -->
+            <circle cx="55" cy="90" r="3" fill="#4dd0e1" opacity=".8"/>
+            <circle cx="105" cy="88" r="2.5" fill="#4dd0e1" opacity=".8"/>
+            <circle cx="72" cy="108" r="2" fill="#4dd0e1" opacity=".6"/>
+          </svg>
+        </div>
+        <div class="product-body">
+          <span class="product-tag tag-agri">Agri-Care</span>
+          <div class="product-name">Organic Farming Solutions</div>
+          <p class="product-desc">Empower your farm with organic inputs that boost yield, protect soil, and promote sustainable agriculture.</p>
+          <ul class="product-items">
+            <li>Bio-Pesticides &amp; Fungicides</li>
+            <li>Organic Soil Enrichers</li>
+            <li>Plant Growth Promoters</li>
+            <li>Herbal Crop Protectants</li>
+          </ul>
+          <a href="https://wa.me/918798854711?text=Hi%20Rafaela%2C%20I'm%20interested%20in%20Agri-Care%20products!" target="_blank" class="btn-wa">
+            <i class="fab fa-whatsapp"></i> Consult on WhatsApp
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ────────────── CTA ────────────── -->
+<section id="cta">
+  <div class="cta-inner reveal">
+    <span class="section-tag" style="background:rgba(201,168,76,.2);color:var(--gold-light);border-color:rgba(201,168,76,.3);">Business Opportunity</span>
+    <h2 class="section-title">Want to Start Your Own Business or Buy Products?</h2>
+    <p class="section-sub">Join thousands of SHPL partners across India. Whether you want to buy premium herbal products or build a thriving wellness business — we're just one message away.</p>
+    <div class="cta-btns">
+      <a href="https://wa.me/918798854711?text=Hi!%20I%20want%20to%20join%20SHPL%20as%20a%20business%20partner." target="_blank" class="btn-cta-primary">
+        <i class="fab fa-whatsapp"></i> Join SHPL Business
+      </a>
+      <a href="https://wa.me/918798854711?text=Hi!%20I%20want%20to%20buy%20SHPL%20products." target="_blank" class="btn-cta-secondary">
+        <i class="fas fa-shopping-bag"></i> Buy Products
+      </a>
+    </div>
+  </div>
+
+  <!-- Rafaela full showcase -->
+  <div class="rafaela-showcase reveal">
+    <div class="rafaela-left">
+      <div class="rafaela-big-avatar">🌿</div>
+      <div class="rafaela-info">
+        <h3>Rafaela — Your SHPL Advisor</h3>
+        <p>Senior Wellness Consultant · Saarvasri Herbs Pvt. Ltd.</p>
+        <p class="rafaela-quote">"I'm here to guide you toward the right herbal solution — whether it's for your health, your family, or your business journey with SHPL."</p>
+      </div>
+    </div>
+    <div class="rafaela-right">
+      <a href="https://wa.me/918798854711" target="_blank" class="btn-wa" style="font-size:1rem;padding:14px 28px;">
+        <i class="fab fa-whatsapp"></i> Chat with Rafaela
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────── FOOTER ────────────── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#hero" class="logo">
+          <div class="logo-icon"><i class="fas fa-leaf"></i></div>
+          <div class="logo-text">
+            <span>SHPL</span>
+            <span>Saarvasri Herbs Pvt. Ltd.</span>
+          </div>
+        </a>
+        <p>India's trusted herbal &amp; wellness brand — blending ancient Ayurveda with modern science for a healthier nation.</p>
+        <div class="social-links" style="margin-top:20px;">
+          <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="https://wa.me/918798854711" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#benefits">Why SHPL?</a></li>
+          <li><a href="#products">Products</a></li>
+          <li><a href="#cta">Join Us</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="https://wa.me/918798854711" target="_blank"><i class="fab fa-whatsapp"></i> 8798854711</a></li>
+          <li><a href="#"><i class="fas fa-map-marker-alt"></i> India</a></li>
+          <li><a href="mailto:info@shpl.in"><i class="fas fa-envelope"></i> info@shpl.in</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <p>© 2025 Saarvasri Herbs Pvt. Ltd. (SHPL). All rights reserved. Advisor: <strong style="color:var(--gold-light);">Rafaela</strong>.</p>
+      <p style="font-size:.78rem;">Crafted with 🌿 &amp; ❤️ for a healthier India.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp float -->
+<a href="https://wa.me/918798854711" target="_blank" class="wa-float" title="Chat on WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<script>
+  // ── Navbar scroll ──
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 30);
+  });
+
+  // ── Hamburger menu ──
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+  document.querySelectorAll('#navLinks a').forEach(a =>
+    a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'))
+  );
+
+  // ── Scroll reveal ──
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        // stagger siblings
+        const siblings = [...e.target.parentElement.querySelectorAll('.reveal')];
+        const idx = siblings.indexOf(e.target);
+        e.target.style.transitionDelay = (idx * 0.12) + 's';
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
